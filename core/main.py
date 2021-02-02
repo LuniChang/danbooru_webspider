@@ -59,7 +59,7 @@ def initJdSpider(pRow):
                    offvalue=0, command=checkUseTag).grid(row=pRow, column=1)
 
 
-    tk.Checkbutton(fm1, text="自动下载（很慢）", variable=useTag, onvalue=1,
+    tk.Checkbutton(fm1, text="自动下载（很慢）", variable=needDown, onvalue=1,
                    offvalue=0, command=checkUseTag).grid(row=pRow, column=2)
 
     tk.Label(fm1, text="url").grid(row=pRow+1, column=0)
