@@ -42,7 +42,7 @@ def initJdSpider(pRow):
 
 
     savePath = tk.StringVar()
-    savePath.set(path.getProjectPath()+"down\\"+str(datetime.date.today()))
+    savePath.set(path.getProjectPath()+"down\\down_list_"+str(datetime.date.today()))
 
     totalPage = tk.IntVar()
     totalPage.set(spider.totalPage)

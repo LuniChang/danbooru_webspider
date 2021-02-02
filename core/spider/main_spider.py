@@ -19,14 +19,13 @@ import common.net as net
 import common.log as log
 
 
-
 # self.browser:浏览器，将浏览器设置为谷歌驱动，
 # 这里需要下载谷歌对应的驱动,使用火狐浏览器安装驱动后webdriver.Firefox()
 
 
 class MainSpider():
 
-    savePath =None
+    savePath = None
     baseUrl = 'https://danbooru.donmai.us/posts?tags=azur_lane'
     browser = None
 
@@ -38,7 +37,7 @@ class MainSpider():
 
     needDown = True
 
-    totalPage=1000
+    totalPage = 1000
 
     def __init__(self):
         pass
@@ -80,38 +79,39 @@ class MainSpider():
                 '//article[@data-file-url]')
 
             for item in items:
-                try:
-                    if self.useTag:
-                        urlTag = item.find_element_by_tag_name(
-                            'a')
-                        url = urlTag.get_attribute('href')
-                        self.openNewTag(url)
-                        self.wait.until(
-                            EC.presence_of_element_located(
-                                (By.CSS_SELECTOR, '#post-info-size'))
-                        )
-                        tag = self.browser.find_element_by_id('post-info-size')
-                        if self.needDown:
-                            downUrl = tag.find_element_by_tag_name(
-                                'a').get_attribute('href')
-                            net.download_from_url(downUrl,self.savePath)
-                        log.history(downUrl)
-                        # print(downUrl)
-                        self.closeTab()
 
-                    else:
-                        downUrl = item.get_attribute('data-file-url')
-                        if self.needDown:
-                            net.download_from_url(downUrl,self.savePath)
-                        log.history(downUrl)
-                        # print(downUrl)
-                   
-                except Exception as e:
-                    print("getImg:"+str(e))
-            sleep(10)        
+                if self.useTag:
+                    urlTag = item.find_element_by_tag_name(
+                        'a')
+                    url = urlTag.get_attribute('href')
+                    self.openNewTag(url)
+                    self.wait.until(
+                        EC.presence_of_element_located(
+                            (By.CSS_SELECTOR, '#post-info-size'))
+                    )
+                    tag = self.browser.find_element_by_id('post-info-size')
+                    if self.needDown:
+                        downUrl = tag.find_element_by_tag_name(
+                            'a').get_attribute('href')
+                        net.download_from_url(downUrl, self.savePath)
+                    log.history(downUrl)
+                    # print(downUrl)
+                    self.closeTab()
 
+                else:
+                    downUrl = item.get_attribute('data-file-url')
+                    if self.needDown:
+                        net.download_from_url(downUrl, self.savePath)
+                    log.history(downUrl)
+                    # print(downUrl)
+
+            if not self.useTag:
+                sleep(20)
+            return True
         except Exception as e:
+            self.browser.refresh()
             print("getImg:"+str(e))
+            return False
 
     def nextPage(self):
         print("nextPage")
@@ -125,6 +125,8 @@ class MainSpider():
 
             log.lastUrl(self.browser.current_url)
         except Exception as e:
+            self.browser.back()
+            # self.browser.refresh()
             print("nextPage:"+str(e))
 
     def doSprider(self):
@@ -132,11 +134,10 @@ class MainSpider():
             self.browser = webdriver.Firefox()
 
         self.open()
-        self.getImgs()
         total = self.totalPage
         for i in range(0, total):
-            self.nextPage()
-            self.getImgs()
+            if self.getImgs():
+                self.nextPage()
 
     def start(self):
         print("start")
