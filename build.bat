@@ -1,0 +1,1 @@
+pyinstaller  -F   ./core/main.py  -p=C:/Python37/Lib
