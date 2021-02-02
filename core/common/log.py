@@ -34,7 +34,7 @@ def lastUrl(message):
   
     fPath = path.getLogDirPath()+"lasturl.txt"
     f=open(fPath, "a+")
-
+    f.write('\r\n')
     f.write(message)
     f.close()
 
