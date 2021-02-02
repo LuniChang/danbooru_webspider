@@ -23,7 +23,7 @@ def err(message):
 
 def history(message):
   
-    historyPath = path.getLogDirPath()+"down_history.txt"
+    historyPath = path.getLogDirPath()+"down_history_"+str(datetime.date.today())+".txt"
     f=open(historyPath, "a+")
 
     f.write(message)
