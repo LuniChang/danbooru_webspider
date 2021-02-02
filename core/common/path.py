@@ -8,7 +8,7 @@ def getProjectPath():
         # return os.path.dirname(sys.executable)+"\\"  #使用pyinstaller打包后的exe目录
         return ".\\"
     else:
-        project_name = "danboru_webspider"
+        project_name = "danbooru_webspider"
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
@@ -21,7 +21,7 @@ def getResDirPath():
         # return sys._MEIPASS+"\\res\\"  #使用pyinstaller打包后的exe目录
         return ".\\res\\"
     else:
-        project_name = "danboru_webspider"
+        project_name = "danbooru_webspider"
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
@@ -38,7 +38,7 @@ def getLogDirPath():
 
         return dirPath+"\\"
     else:
-        project_name = "danboru_webspider"
+        project_name = "danbooru_webspider"
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
