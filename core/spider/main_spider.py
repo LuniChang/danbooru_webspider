@@ -36,6 +36,8 @@ class MainSpider():
 
     useTag = True
 
+    needDown = True
+
     totalPage=1000
 
     def __init__(self):
@@ -88,15 +90,17 @@ class MainSpider():
                                 (By.CSS_SELECTOR, '#post-info-size'))
                         )
                         tag = self.browser.find_element_by_id('post-info-size')
-                        downUrl = tag.find_element_by_tag_name(
-                            'a').get_attribute('href')
-                        net.download_from_url(downUrl,self.savePath)
+                        if self.needDown:
+                            downUrl = tag.find_element_by_tag_name(
+                                'a').get_attribute('href')
+                            net.download_from_url(downUrl,self.savePath)
                         log.history(downUrl)
                         self.closeTab()
 
                     else:
                         downUrl = item.get_attribute('data-file-url')
-                        net.download_from_url(downUrl,self.savePath)
+                        if self.needDown:
+                            net.download_from_url(downUrl,self.savePath)
                         log.history(downUrl)
                 except Exception as e:
                     print("getImg:"+str(e))
