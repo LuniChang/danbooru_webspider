@@ -90,13 +90,13 @@ class MainSpider():
                         tag = self.browser.find_element_by_id('post-info-size')
                         downUrl = tag.find_element_by_tag_name(
                             'a').get_attribute('href')
-                        net.downUrl(downUrl,self.savePath)
+                        net.download_from_url(downUrl,self.savePath)
                         log.info(downUrl)
                         self.closeTab()
 
                     else:
                         downUrl = item.get_attribute('data-file-url')
-                        net.downUrl(downUrl,self.savePath)
+                        net.download_from_url(downUrl,self.savePath)
                         log.info(downUrl)
                 except Exception as e:
                     print(str(e))
