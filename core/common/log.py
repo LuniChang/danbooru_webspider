@@ -30,3 +30,20 @@ def history(message):
     f.write('\r\n')
     f.close()
 
+def lastUrl(message):
+  
+    fPath = path.getLogDirPath()+"lasturl.txt"
+    f=open(fPath, "a+")
+
+    f.write(message)
+    f.close()
+
+def getLastUrl():
+  
+    fPath = path.getLogDirPath()+".txt"
+    f=open(fPath)
+
+    res=f.readline()
+    f.close()
+
+    return res

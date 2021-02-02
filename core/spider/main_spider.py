@@ -45,6 +45,7 @@ class MainSpider():
 
     def open(self):
         # 解决加载超时出错
+        print("open")
         try:
             self.browser.get(self.baseUrl)
             # 浏览器等待10秒
@@ -64,7 +65,7 @@ class MainSpider():
     # 获取商品信息
 
     def getImgs(self):
-
+        print("getImgs")
         try:
 
             self.wait.until(
@@ -95,6 +96,7 @@ class MainSpider():
                                 'a').get_attribute('href')
                             net.download_from_url(downUrl,self.savePath)
                         log.history(downUrl)
+                        # print(downUrl)
                         self.closeTab()
 
                     else:
@@ -102,13 +104,17 @@ class MainSpider():
                         if self.needDown:
                             net.download_from_url(downUrl,self.savePath)
                         log.history(downUrl)
+                        # print(downUrl)
+                   
                 except Exception as e:
                     print("getImg:"+str(e))
+            sleep(10)        
 
         except Exception as e:
             print("getImg:"+str(e))
 
     def nextPage(self):
+        print("nextPage")
         try:
             nextPage = self.wait.until(
                 EC.presence_of_element_located(
@@ -116,6 +122,8 @@ class MainSpider():
             )
 
             nextPage.click()
+
+            log.lastUrl(self.browser.current_url)
         except Exception as e:
             print("nextPage:"+str(e))
 
@@ -131,6 +139,7 @@ class MainSpider():
             self.getImgs()
 
     def start(self):
+        print("start")
         if self._isRun:
             return
         self._isRun = True
