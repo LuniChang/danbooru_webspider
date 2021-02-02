@@ -31,11 +31,11 @@ def initJdSpider(pRow):
            spider.useTag=True
         else:
            spider.useTag=False
-
+    def checkNeedDown():
         if needDown.get() == 1:
-           spider.needDown=True
+            spider.needDown=True
         else:
-           spider.needDown=False
+            spider.needDown=False
 
     url = tk.StringVar()
     url.set(spider.baseUrl)
@@ -60,7 +60,7 @@ def initJdSpider(pRow):
 
 
     tk.Checkbutton(fm1, text="自动下载（很慢）", variable=needDown, onvalue=1,
-                   offvalue=0, command=checkUseTag).grid(row=pRow, column=2)
+                   offvalue=0, command=checkNeedDown).grid(row=pRow, column=2)
 
     tk.Label(fm1, text="url").grid(row=pRow+1, column=0)
 
