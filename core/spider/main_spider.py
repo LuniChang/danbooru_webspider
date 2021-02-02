@@ -55,7 +55,7 @@ class MainSpider():
 
         # 超时出错时，重新执行search()程序
         except Exception as e:
-            print(str(e))
+            print("open："+str(e))
 
             return 0
 
@@ -91,18 +91,18 @@ class MainSpider():
                         downUrl = tag.find_element_by_tag_name(
                             'a').get_attribute('href')
                         net.download_from_url(downUrl,self.savePath)
-                        log.info(downUrl)
+                        log.history(downUrl)
                         self.closeTab()
 
                     else:
                         downUrl = item.get_attribute('data-file-url')
                         net.download_from_url(downUrl,self.savePath)
-                        log.info(downUrl)
+                        log.history(downUrl)
                 except Exception as e:
-                    print(str(e))
+                    print("getImg:"+str(e))
 
         except Exception as e:
-            print(str(e))
+            print("getImg:"+str(e))
 
     def nextPage(self):
         try:
@@ -113,7 +113,7 @@ class MainSpider():
 
             nextPage.click()
         except Exception as e:
-            print(str(e))
+            print("nextPage:"+str(e))
 
     def doSprider(self):
         if self.browser == None:
