@@ -116,6 +116,8 @@ class MainSpider():
     def nextPage(self):
         print("nextPage")
         try:
+            
+            log.lastUrl(self.browser.current_url)
             nextPage = self.wait.until(
                 EC.presence_of_element_located(
                     (By.CSS_SELECTOR, '#paginator-next'))
@@ -123,7 +125,7 @@ class MainSpider():
 
             nextPage.click()
 
-            log.lastUrl(self.browser.current_url)
+            
         except Exception as e:
             self.browser.back()
             # self.browser.refresh()
