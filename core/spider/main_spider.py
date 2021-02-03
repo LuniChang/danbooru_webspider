@@ -95,7 +95,7 @@ class MainSpider():
                             'a').get_attribute('href')
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
-                    # print(downUrl)
+                    print(downUrl)
                     self.closeTab()
 
                 else:
@@ -103,14 +103,14 @@ class MainSpider():
                     if self.needDown:
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
-                    # print(downUrl)
+                    print(downUrl)
 
             if not self.useTag:
                 sleep(20)
             return True
         except Exception as e:
             self.browser.refresh()
-            print("getImg:"+str(e))
+            print("getImg err:"+str(e))
             return False
 
     def nextPage(self):
@@ -127,7 +127,7 @@ class MainSpider():
         except Exception as e:
             self.browser.back()
             # self.browser.refresh()
-            print("nextPage:"+str(e))
+            print("nextPage err:"+str(e))
 
     def doSprider(self):
         if self.browser == None:
@@ -153,10 +153,8 @@ class MainSpider():
     def openNewTag(self, url):
         js = "window.open('"+url+"')"
         self.browser.execute_script(js)
-        # self.wait = WebDriverWait(self.browser, 10)
         self.browser.switch_to.window(self.browser.window_handles[1])
 
     def closeTab(self):
         self.browser.close()
-        # self.wait = WebDriverWait(self.browser, 10)
         self.browser.switch_to.window(self.browser.window_handles[0])
