@@ -90,9 +90,10 @@ class MainSpider():
                             (By.CSS_SELECTOR, '#post-info-size'))
                     )
                     tag = self.browser.find_element_by_id('post-info-size')
+                    downUrl = tag.find_element_by_tag_name(
+                        'a').get_attribute('href')
                     if self.needDown:
-                        downUrl = tag.find_element_by_tag_name(
-                            'a').get_attribute('href')
+
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
                     print(downUrl)
@@ -116,7 +117,7 @@ class MainSpider():
     def nextPage(self):
         print("nextPage")
         try:
-            
+
             log.lastUrl(self.browser.current_url)
             nextPage = self.wait.until(
                 EC.presence_of_element_located(
@@ -125,7 +126,6 @@ class MainSpider():
 
             nextPage.click()
 
-            
         except Exception as e:
             self.browser.back()
             # self.browser.refresh()
@@ -142,7 +142,7 @@ class MainSpider():
                 if self.getImgs():
                     self.nextPage()
             except Exception as e:
-                print("doSprider err:"+str(e))    
+                print("doSprider err:"+str(e))
 
     def start(self):
         print("start")
