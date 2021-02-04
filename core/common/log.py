@@ -11,8 +11,6 @@ logging.basicConfig(level=logging.INFO,  # 控制台打印的日志级别
                     )
 
 
-
-
 def info(message):
     logging.info(message)
 
@@ -22,28 +20,32 @@ def err(message):
 
 
 def history(message):
-  
-    historyPath = path.getLogDirPath()+"down_history_"+str(datetime.date.today())+".txt"
-    f=open(historyPath, "a+")
+
+    historyPath = path.getLogDirPath()+"down_history_" + \
+        str(datetime.date.today())+".txt"
+    f = open(historyPath, "a+")
 
     f.write(message)
     f.write('\r\n')
     f.close()
+
 
 def lastUrl(message):
-  
+
     fPath = path.getLogDirPath()+"lasturl.txt"
-    f=open(fPath, "a+")
+    f = open(fPath, "a+")
     f.write('\r\n')
     f.write(message)
     f.close()
 
-def getLastUrl():
-  
-    fPath = path.getLogDirPath()+".txt"
-    f=open(fPath)
 
-    res=f.readline()
+def getLastUrl():
+
+    fPath = path.getLogDirPath()+".txt"
+    f = open(fPath)
+
+    res = f.readline()
     f.close()
 
     return res
+

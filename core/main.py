@@ -22,7 +22,7 @@ main = tk.Tk()
 
 
 main.title("d爬虫工具")
-main.geometry("600x200")
+main.geometry("600x300")
 
 fm1 = tk.Frame(main)
 fm1.pack()
@@ -95,17 +95,31 @@ def initJdSpider(pRow):
 
 
 
-initJdSpider(1)
+initJdSpider(0)
 
 
-# print(float(re.search('(\d|(\d*[.]\d*))*斤',"武鸣沃柑 10斤新鲜")[0].replace('斤','')))
+def  initSplitFile(pRow):
 
-# import net
-# import config
+    filePath = tk.StringVar()
+    rowNum = tk.IntVar()
+    rowNum.set(2000)
+    def  splitFile():
+        path.splitByLineCount(filePath.get(),rowNum.get())
 
-# param={'price': 6.76, 'srcPrice': '16.90', 'shopName': '果迎鲜官方旗舰店', 'commit': '10000', 'itemName': '第二件9.9元 沃柑 5斤装 广西沃柑\n柑橘\n新鲜水果桔子 广西沃柑 非皇帝柑 武鸣沃柑 送开果器。第二件9.9元 ，买2件合并发货不拆包。因快递超重的原因合发净果9斤以净果为准，广西沃柑礼盒装，过节送礼必备，点此购买'}
+    
+    tk.Label(fm1, text="文件切割路径:").grid(row=pRow, column=0)
+    tk.Entry(fm1, textvariable=filePath, width=100).grid(row=pRow, column=1,columnspan=4)
+    tk.Label(fm1, text="行数:").grid(row=pRow+1, column=0)
+    tk.Entry(fm1, textvariable=rowNum, width=20).grid(row=pRow+1, column=1,columnspan=1)
 
-# net.postData(config.API_URL+"/api/jdData/add",param)
+
+    tk.Button(fm1, text="开始切割", width=10, height=1,
+              command=splitFile).grid(row=pRow+4, column=1)
+
+
+
+initSplitFile(5)
+    
 
 # 进入消息循环
 main.mainloop()
