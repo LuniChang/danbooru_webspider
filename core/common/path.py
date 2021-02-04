@@ -14,6 +14,18 @@ def getProjectPath():
             project_name+"\\")+len(project_name+"\\")]
         return rootPath
 
+def getConfPath():
+    if hasattr(sys, 'frozen'):
+        # Handles PyInstaller
+        # return os.path.dirname(sys.executable)+"\\"  #使用pyinstaller打包后的exe目录
+        return ".\\user.conf"
+    else:
+        project_name = "danbooru_webspider"
+        curPath = os.path.abspath(os.path.dirname(__file__))
+        rootPath = curPath[:curPath.find(
+            project_name+"\\")+len(project_name+"\\")]
+        return rootPath+"core\\user.conf"
+
 
 def getResDirPath():
     if hasattr(sys, 'frozen'):

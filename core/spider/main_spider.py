@@ -138,8 +138,11 @@ class MainSpider():
         self.open()
         total = self.totalPage
         for i in range(0, total):
-            if self.getImgs():
-                self.nextPage()
+            try:
+                if self.getImgs():
+                    self.nextPage()
+            except Exception as e:
+                print("doSprider err:"+str(e))    
 
     def start(self):
         print("start")

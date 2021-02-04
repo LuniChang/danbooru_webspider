@@ -5,7 +5,18 @@ import re
 from spider.main_spider import MainSpider
 import common.path as path
 import datetime
+import configparser
 
+
+baseUrl=None
+try:
+    conf= configparser.RawConfigParser()
+    conf.read(path.getConfPath())  # 文件路径
+    print(path.getConfPath())
+    baseUrl = conf.get("spider", "url") 
+
+except Exception as e:
+    print("conf err:"+str(e))
 
 main = tk.Tk()
 
@@ -38,8 +49,11 @@ def initJdSpider(pRow):
             spider.needDown=False
 
     url = tk.StringVar()
-    url.set(spider.baseUrl)
 
+    if baseUrl == None:
+       url.set(spider.baseUrl)
+    else:
+       url.set(baseUrl)
 
     savePath = tk.StringVar()
     savePath.set(path.getProjectPath()+"down\\down_list_"+str(datetime.date.today()))
