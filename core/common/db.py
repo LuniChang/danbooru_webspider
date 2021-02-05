@@ -78,25 +78,25 @@ class DataBase():
 
     def getData(self,page,pageSize,tag):
 
-        result=None
+        result=[]
 
         if page<1:
             selectSql='''
-            SELECT * FORM URL_DATA  WHERE TAG=? 
+            SELECT URL,TAG,CREATE_TIME FROM URL_DATA 
             '''
         
-
-            self._connect.execute(selectSql,(tag,page*pageSize,pageSize))
-            result = self._connect.fetchall()
+            cur = self._connect.cursor()
+            result=cur.execute(selectSql).fetchall()
+  
 
         else:    
             selectSql='''
-            SELECT * FORM URL_DATA  WHERE TAG=? 
+            SELECT URL,TAG,CREATE_TIME FROM URL_DATA  WHERE TAG=? ORDER BY CREATE_TIME DESC LIMIT ? offset ?
             '''
         
+            cur = self._connect.cursor()
+            result=cur.execute(selectSql,(tag,(page-1)*pageSize,pageSize)).fetchall()
 
-            self._connect.execute(selectSql,(tag,page*pageSize,pageSize))
-            result = self._connect.fetchall()
 
         return result    
     
@@ -106,9 +106,9 @@ class DataBase():
             res=self.getData(page,pageSize,tag)
             f = open(printPath, "a+")
 
-
-            # f.write(message)
-            f.write('\r\n')
+            for row in res:
+                f.write(row[0])
+                f.write('\r\n')
             f.close()
         except Exception as e:
             print("printDataToFile err:"+str(e))   

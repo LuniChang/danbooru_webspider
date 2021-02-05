@@ -34,19 +34,18 @@ main = tk.Tk()
 main.title("d爬虫工具")
 main.geometry("800x600")
 
-fm1 = tk.Frame(main)
-fm1.pack()
 
 
-def initJdSpider(pRow):
+
+def initJdSpider(paramFrame,bg='#ddd'):
 
   
     spider=MainSpider()
 
     useTag = tk.IntVar()
-    useTag.set(1)
+    useTag.set(0)
     needDown = tk.IntVar()
-    needDown.set(1)
+    needDown.set(0)
 
     dataTag=tk.StringVar()
     dataTag.set(confTag)
@@ -91,52 +90,53 @@ def initJdSpider(pRow):
     
                 
 
-    tk.Checkbutton(fm1, text="打开标签模式", variable=useTag, onvalue=1,
-                   offvalue=0, command=checkUseTag).grid(row=pRow, column=1)
+    tk.Checkbutton(paramFrame,bg=bg, text="打开标签模式", variable=useTag, onvalue=1,
+                   offvalue=0, command=checkUseTag).grid(row=0, column=1)
 
 
-    tk.Checkbutton(fm1, text="自动下载（很慢）", variable=needDown, onvalue=1,
-                   offvalue=0, command=checkNeedDown).grid(row=pRow, column=2)
+    tk.Checkbutton(paramFrame,bg=bg, text="自动下载（很慢）", variable=needDown, onvalue=1,
+                   offvalue=0, command=checkNeedDown).grid(row=0, column=2)
 
-    tk.Label(fm1, text="url").grid(row=pRow+1, column=0)
+    tk.Label(paramFrame,bg=bg, text="url").grid(row=1, column=0)
 
-    tk.Entry(fm1, textvariable=url, width=100).grid(row=pRow+1, column=1,columnspan=4)
+    tk.Entry(paramFrame,bg=bg, textvariable=url, width=100).grid(row=1, column=1,columnspan=4)
 
-    tk.Label(fm1, text="保存路径:").grid(row=pRow+2, column=0)
+    tk.Label(paramFrame,bg=bg, text="保存路径:").grid(row=2, column=0)
 
-    tk.Entry(fm1, textvariable=savePath, width=100).grid(row=pRow+2, column=1,columnspan=4)
+    tk.Entry(paramFrame,bg=bg, textvariable=savePath, width=100).grid(row=2, column=1,columnspan=4)
 
-    tk.Label(fm1, text="翻页数量:").grid(row=pRow+3, column=0)
+    tk.Label(paramFrame,bg=bg, text="翻页数量:").grid(row=3, column=0)
 
-    tk.Entry(fm1, textvariable=totalPage, width=20).grid(row=pRow+3, column=1,columnspan=1)
+    tk.Entry(paramFrame,bg=bg, textvariable=totalPage, width=20).grid(row=3, column=1,columnspan=1)
 
-    tk.Label(fm1, text="数据库标签:").grid(row=pRow+4, column=0)
+    tk.Label(paramFrame,bg=bg, text="数据库标签:").grid(row=4, column=0)
 
-    tk.Entry(fm1, textvariable=dataTag, width=20).grid(row=pRow+4, column=1,columnspan=1)
-
-
-    tk.Label(fm1, text="数据库路径:").grid(row=pRow+5, column=0)
-    tk.Label(fm1, textvariable=dbPathShow).grid(row=pRow+5, column=1)
-    tk.Button(fm1, text="选择数据库", width=10, height=1,
-              command=selectDbFile).grid(row=pRow+5, column=2)
+    tk.Entry(paramFrame,bg=bg, textvariable=dataTag, width=20).grid(row=4, column=1,columnspan=1)
 
 
-
-
-    tk.Button(fm1, text="启动爬虫", width=10, height=1,
-              command=startRun).grid(row=pRow+6, column=1)
-    tk.Button(fm1, text="关闭", width=10, height=1,
-              command=spider.stop).grid(row=pRow+6, column=2)
-
-
-
-initJdSpider(0)
+    tk.Label(paramFrame,bg=bg, text="数据库路径:").grid(row=5, column=0)
+    tk.Label(paramFrame,bg=bg, textvariable=dbPathShow).grid(row=5, column=1)
+    tk.Button(paramFrame,bg=bg, text="选择数据库", width=10, height=1,
+              command=selectDbFile).grid(row=5, column=2)
 
 
 
 
+    tk.Button(paramFrame,bg=bg, text="启动爬虫", width=10, height=1,
+              command=startRun).grid(row=6, column=1)
+    tk.Button(paramFrame,bg=bg, text="关闭", width=10, height=1,
+              command=spider.stop).grid(row=6, column=2)
 
-def  initDataBase(pRow):
+
+fm1 = tk.Frame(main,bg='#ddd')
+fm1.grid(row=0, column=0)
+initJdSpider(fm1)
+
+
+
+
+
+def  initDataBase(paramFrame,bg='#ddd'):
     
     infilePath = tk.StringVar()
     outfilePath = tk.StringVar()
@@ -161,38 +161,42 @@ def  initDataBase(pRow):
     def insertDatas():     
         dbCon.insertFromFile(infilePath.get(),dataTag.get())  
         msgbox.showinfo("提示","导入完成")
+
+    def prinOutDatas():     
+        dbCon.printDataToFile(page.get(),rowNum.get(),dataTag.get(),outfilePath.get())
+        msgbox.showinfo("提示","出完成")
     
     
+    tk.Label(paramFrame,bg=bg, text="导入数据文件路径:").grid(row=0, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=infilePath, width=100).grid(row=1, column=1,columnspan=4)
+    tk.Button(paramFrame,bg=bg, text="选择文件", width=10, height=1,
+              command=selectInFile).grid(row=2, column=1)
+    tk.Button(paramFrame,bg=bg, text="导入", width=10, height=1,
+              command=insertDatas).grid(row=2, column=2)
 
-    tk.Label(fm1, text="导入数据文件路径:").grid(row=pRow, column=0)
-    tk.Entry(fm1, textvariable=infilePath, width=100).grid(row=pRow+1, column=1,columnspan=4)
-    tk.Button(fm1, text="选择文件", width=10, height=1,
-              command=selectInFile).grid(row=pRow+2, column=1)
-    tk.Button(fm1, text="导入", width=10, height=1,
-              command=insertDatas).grid(row=pRow+2, column=2)
-
-
-    tk.Label(fm1, text="页数:").grid(row=pRow+3, column=0)
-    tk.Entry(fm1, textvariable=rowNum, width=20).grid(row=pRow+3, column=1,columnspan=1)
-    tk.Label(fm1, text="行数:").grid(row=pRow+3, column=2)
-    tk.Entry(fm1, textvariable=rowNum, width=20).grid(row=pRow+3, column=3,columnspan=1)
-    tk.Label(fm1, text="标签:").grid(row=pRow+4, column=0)
-    tk.Entry(fm1, textvariable=dataTag, width=20).grid(row=pRow+4, column=1,columnspan=1)
-    tk.Label(fm1, text="导出数据文件路径:").grid(row=pRow+5, column=0)
-    tk.Entry(fm1, textvariable=infilePath, width=100).grid(row=pRow+6, column=1,columnspan=4)
-    tk.Button(fm1, text="选择文件", width=10, height=1,
-              command=selectInFile).grid(row=pRow+7, column=1)
-    # tk.Button(fm1, text="导出", width=10, height=1,
-    #           command=splitFile).grid(row=pRow+6 column=1)
-
+    tk.Label(paramFrame,bg=bg, text="").grid(row=3, column=0)
+    tk.Label(paramFrame,bg=bg, text="页数(0是全部):").grid(row=4, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=page, width=20).grid(row=4, column=1,columnspan=1)
+    tk.Label(paramFrame,bg=bg, text="行数:").grid(row=4, column=2)
+    tk.Entry(paramFrame,bg=bg, textvariable=rowNum, width=20).grid(row=4, column=3,columnspan=1)
+    tk.Label(paramFrame,bg=bg, text="标签:").grid(row=5, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=dataTag, width=20).grid(row=5, column=1,columnspan=1)
+    tk.Label(paramFrame,bg=bg, text="导出数据文件路径:").grid(row=6, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=outfilePath, width=100).grid(row=7, column=1,columnspan=4)
+    tk.Button(paramFrame,bg=bg, text="选择文件", width=10, height=1,
+              command=selectOutFile).grid(row=8, column=1)
+    tk.Button(paramFrame,bg=bg, text="导出", width=10, height=1,
+              command=prinOutDatas).grid(row=8, column=2)
 
 
-initDataBase(15)
+fm2 = tk.Frame(main,bg='#fff')
+fm2.grid(row=1, column=0)
+initDataBase(fm2,'#fff')
 
 
 
 
-def  initSplitFile(pRow):
+def  initSplitFile(paramFrame,bg='#ddd'):
 
     filePath = tk.StringVar()
     rowNum = tk.IntVar()
@@ -205,24 +209,25 @@ def  initSplitFile(pRow):
         filePath.set(tmpPath)
 
     
-    tk.Label(fm1, text="文件切割路径:").grid(row=pRow, column=0)
+    tk.Label(paramFrame,bg=bg, text="文件切割路径:").grid(row=0, column=0)
 
-    tk.Entry(fm1, textvariable=filePath, width=100).grid(row=pRow, column=1,columnspan=4)
+    tk.Entry(paramFrame,bg=bg, textvariable=filePath, width=100).grid(row=0, column=1,columnspan=4)
 
-    tk.Button(fm1, text="选择文件", width=10, height=1,
-              command=selectFile).grid(row=pRow+1, column=1)
-
-
-    tk.Label(fm1, text="行数:").grid(row=pRow+1, column=0)
-    tk.Entry(fm1, textvariable=rowNum, width=20).grid(row=pRow+2, column=1,columnspan=1)
+    tk.Button(paramFrame,bg=bg, text="选择文件", width=10, height=1,
+              command=selectFile).grid(row=1, column=1)
 
 
-    tk.Button(fm1, text="开始切割", width=10, height=1,
-              command=splitFile).grid(row=pRow+3, column=1)
+    tk.Label(paramFrame,bg=bg, text="行数:").grid(row=1, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=rowNum, width=20).grid(row=2, column=1,columnspan=1)
 
 
+    tk.Button(paramFrame,bg=bg, text="开始切割", width=10, height=1,
+              command=splitFile).grid(row=3, column=1)
 
-initSplitFile(30)
+
+fm3 = tk.Frame(main,bg='#ddd')
+fm3.grid(row=2, column=0)
+initSplitFile(fm3)
 
 
 # 进入消息循环
