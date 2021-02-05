@@ -18,6 +18,7 @@ import config
 import common.net as net
 import common.log as log
 
+from common.db import dbCon
 
 # self.browser:浏览器，将浏览器设置为谷歌驱动，
 # 这里需要下载谷歌对应的驱动,使用火狐浏览器安装驱动后webdriver.Firefox()
@@ -38,6 +39,8 @@ class MainSpider():
     needDown = True
 
     totalPage = 1000
+
+    dataTag="azur_lane"
 
     def __init__(self):
         pass
@@ -96,6 +99,7 @@ class MainSpider():
 
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
+                    dbCon.insertData(downUrl,dataTag)
                     print(downUrl)
                     self.closeTab()
 
@@ -104,6 +108,7 @@ class MainSpider():
                     if self.needDown:
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
+                    dbCon.insertData(downUrl,dataTag)
                     print(downUrl)
 
             if not self.useTag:

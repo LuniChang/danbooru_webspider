@@ -2,13 +2,15 @@ import os
 import sys
 
 
+project_name = "danbooru_webspider"
+
 def getProjectPath():
     if hasattr(sys, 'frozen'):
         # Handles PyInstaller
         # return os.path.dirname(sys.executable)+"\\"  #使用pyinstaller打包后的exe目录
         return ".\\"
     else:
-        project_name = "danbooru_webspider"
+         
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
@@ -20,7 +22,7 @@ def getConfPath():
         # return os.path.dirname(sys.executable)+"\\"  #使用pyinstaller打包后的exe目录
         return ".\\user.conf"
     else:
-        project_name = "danbooru_webspider"
+         
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
@@ -33,12 +35,33 @@ def getResDirPath():
         # return sys._MEIPASS+"\\res\\"  #使用pyinstaller打包后的exe目录
         return ".\\res\\"
     else:
-        project_name = "danbooru_webspider"
+         
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
         return rootPath+"res\\"
 
+
+def getDataBasePath():
+    if hasattr(sys, 'frozen'):
+            # Handles PyInstaller
+        # return sys._MEIPASS+"\\res\\"  #使用pyinstaller打包后的exe目录
+        dirPath = ".\\data"
+        if not os.path.exists(dirPath):
+            os.makedirs(dirPath)
+
+        return dirPath+"\\url_db.db"
+    else:
+         
+        curPath = os.path.abspath(os.path.dirname(__file__))
+        rootPath = curPath[:curPath.find(
+            project_name+"\\")+len(project_name+"\\")]
+
+        dirPath = rootPath+"data"
+        if not os.path.exists(dirPath):
+            os.makedirs(dirPath)
+
+        return dirPath+"\\url_db.db"   
 
 def getLogDirPath():
     if hasattr(sys, 'frozen'):
@@ -50,7 +73,7 @@ def getLogDirPath():
 
         return dirPath+"\\"
     else:
-        project_name = "danbooru_webspider"
+         
         curPath = os.path.abspath(os.path.dirname(__file__))
         rootPath = curPath[:curPath.find(
             project_name+"\\")+len(project_name+"\\")]
