@@ -9,6 +9,9 @@ import configparser
 import tkinter.filedialog as filedialog
 from common.db import dbCon
 
+import time
+import datetime
+
 import tkinter.messagebox as msgbox
 
 baseUrl=None
@@ -149,6 +152,17 @@ def  initDataBase(paramFrame,bg='#ddd'):
     dataTag=tk.StringVar()
     dataTag.set(confTag);
 
+    endDate=tk.StringVar()
+    endDate.set(time.strftime("%Y-%m-%d", time.localtime()));
+
+    startDate=tk.StringVar()
+    threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 1))
+    # 转换为时间戳
+    timeStamp = int(time.mktime(threeDayAgo.timetuple()))
+    # 转换为其他字符串格式
+    otherStyleTime = threeDayAgo.strftime("%Y-%m-%d")
+    startDate.set(otherStyleTime);
+
     def selectInFile():
         tmpPath =filedialog.askopenfilename()    
         infilePath.set(tmpPath)
@@ -163,7 +177,7 @@ def  initDataBase(paramFrame,bg='#ddd'):
         msgbox.showinfo("提示","导入完成")
 
     def prinOutDatas():     
-        dbCon.printDataToFile(page.get(),rowNum.get(),dataTag.get(),outfilePath.get())
+        dbCon.printDataToFile(page.get(),rowNum.get(),dataTag.get(),outfilePath.get(),startDate=startDate.get(),endDate=endDate.get())
         msgbox.showinfo("提示","出完成")
     
     
@@ -175,18 +189,27 @@ def  initDataBase(paramFrame,bg='#ddd'):
               command=insertDatas).grid(row=2, column=2)
 
     tk.Label(paramFrame,bg=bg, text="").grid(row=3, column=0)
-    tk.Label(paramFrame,bg=bg, text="页数(0是全部):").grid(row=4, column=0)
+    tk.Label(paramFrame,bg=bg, text="页数(0不分页):").grid(row=4, column=0)
     tk.Entry(paramFrame,bg=bg, textvariable=page, width=20).grid(row=4, column=1,columnspan=1)
+
     tk.Label(paramFrame,bg=bg, text="行数:").grid(row=4, column=2)
     tk.Entry(paramFrame,bg=bg, textvariable=rowNum, width=20).grid(row=4, column=3,columnspan=1)
+
     tk.Label(paramFrame,bg=bg, text="标签:").grid(row=5, column=0)
     tk.Entry(paramFrame,bg=bg, textvariable=dataTag, width=20).grid(row=5, column=1,columnspan=1)
-    tk.Label(paramFrame,bg=bg, text="导出数据文件路径:").grid(row=6, column=0)
-    tk.Entry(paramFrame,bg=bg, textvariable=outfilePath, width=100).grid(row=7, column=1,columnspan=4)
+
+    tk.Label(paramFrame,bg=bg, text="开始时间:").grid(row=6, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=startDate, width=20).grid(row=6, column=1,columnspan=1)
+
+    tk.Label(paramFrame,bg=bg, text="结束时间:").grid(row=6, column=2)
+    tk.Entry(paramFrame,bg=bg, textvariable=endDate, width=20).grid(row=6, column=3,columnspan=1)
+
+    tk.Label(paramFrame,bg=bg, text="导出数据文件路径:").grid(row=7, column=0)
+    tk.Entry(paramFrame,bg=bg, textvariable=outfilePath, width=100).grid(row=8, column=1,columnspan=4)
     tk.Button(paramFrame,bg=bg, text="选择文件", width=10, height=1,
-              command=selectOutFile).grid(row=8, column=1)
+              command=selectOutFile).grid(row=9, column=1)
     tk.Button(paramFrame,bg=bg, text="导出", width=10, height=1,
-              command=prinOutDatas).grid(row=8, column=2)
+              command=prinOutDatas).grid(row=9, column=2)
 
 
 fm2 = tk.Frame(main,bg='#fff')
