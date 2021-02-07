@@ -16,7 +16,7 @@ class DataBase():
 
         if dbPath == None:
             dbPath = path.getDataBasePath()
-        self._connect = sqlite3.connect(dbPath)
+        self._connect = sqlite3.connect(dbPath,check_same_thread=False)
         self._iniDataBase()
 
         return self._connect
