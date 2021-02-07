@@ -40,7 +40,7 @@ class MainSpider():
 
     totalPage = 1000
 
-    dataTag="azur_lane"
+    ="azur_lane"
 
     def __init__(self):
         pass
@@ -99,7 +99,7 @@ class MainSpider():
 
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
-                    dbCon.insertData(downUrl,dataTag)
+                    dbCon.insertData(downUrl,self.dataTag)
                     print(downUrl)
                     self.closeTab()
 
@@ -108,7 +108,7 @@ class MainSpider():
                     if self.needDown:
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
-                    dbCon.insertData(downUrl,dataTag)
+                    dbCon.insertData(downUrl,self.dataTag)
                     print(downUrl)
 
             if not self.useTag:

@@ -150,10 +150,10 @@ def  initDataBase(paramFrame,bg='#ddd'):
     rowNum.set(2000)
 
     dataTag=tk.StringVar()
-    dataTag.set(confTag);
+    dataTag.set(confTag)
 
     endDate=tk.StringVar()
-    endDate.set(time.strftime("%Y-%m-%d", time.localtime()));
+    endDate.set(time.strftime("%Y-%m-%d", time.localtime()))
 
     startDate=tk.StringVar()
     threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 1))
@@ -161,7 +161,7 @@ def  initDataBase(paramFrame,bg='#ddd'):
     timeStamp = int(time.mktime(threeDayAgo.timetuple()))
     # 转换为其他字符串格式
     otherStyleTime = threeDayAgo.strftime("%Y-%m-%d")
-    startDate.set(otherStyleTime);
+    startDate.set(otherStyleTime)
 
     def selectInFile():
         tmpPath =filedialog.askopenfilename()    
