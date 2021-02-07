@@ -104,8 +104,8 @@ class MainSpider():
                     self.closeTab()
 
                 else:
-                    # downUrl = item.get_attribute('data-file-url')
-                    downUrl = item.get_attribute('data-large-file-url')
+                    downUrl = item.get_attribute('data-file-url')
+                    # downUrl = item.get_attribute('data-large-file-url')
                     if self.needDown:
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
