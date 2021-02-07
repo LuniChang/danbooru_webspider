@@ -1,6 +1,5 @@
 
 import tkinter as tk
-import re
 
 from spider.main_spider import MainSpider
 import common.path as path
@@ -46,7 +45,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     spider=MainSpider()
 
     useTag = tk.IntVar()
-    useTag.set(0)
+    useTag.set(0)   
     needDown = tk.IntVar()
     needDown.set(0)
 
