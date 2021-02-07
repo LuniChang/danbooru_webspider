@@ -25,7 +25,7 @@ try:
     dbPath = conf.get("spider", "dbpath") 
 except Exception as e:
     print("conf err:"+str(e))
-
+dbCon.initConnect(dbPath)
 
 
 
