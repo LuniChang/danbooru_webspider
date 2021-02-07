@@ -40,7 +40,7 @@ class MainSpider():
 
     totalPage = 1000
 
-    ="azur_lane"
+    dataTag="azur_lane"
 
     def __init__(self):
         pass
