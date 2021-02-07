@@ -1,6 +1,5 @@
 
 import tkinter as tk
-import re
 
 from spider.main_spider import MainSpider
 import common.path as path
@@ -46,7 +45,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     spider=MainSpider()
 
     useTag = tk.IntVar()
-    useTag.set(0)
+    useTag.set(0)   
     needDown = tk.IntVar()
     needDown.set(0)
 
@@ -150,10 +149,10 @@ def  initDataBase(paramFrame,bg='#ddd'):
     rowNum.set(2000)
 
     dataTag=tk.StringVar()
-    dataTag.set(confTag);
+    dataTag.set(confTag)
 
     endDate=tk.StringVar()
-    endDate.set(time.strftime("%Y-%m-%d", time.localtime()));
+    endDate.set(time.strftime("%Y-%m-%d", time.localtime()))
 
     startDate=tk.StringVar()
     threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 1))
@@ -161,7 +160,7 @@ def  initDataBase(paramFrame,bg='#ddd'):
     timeStamp = int(time.mktime(threeDayAgo.timetuple()))
     # 转换为其他字符串格式
     otherStyleTime = threeDayAgo.strftime("%Y-%m-%d")
-    startDate.set(otherStyleTime);
+    startDate.set(otherStyleTime)
 
     def selectInFile():
         tmpPath =filedialog.askopenfilename()    

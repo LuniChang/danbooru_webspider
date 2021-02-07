@@ -34,9 +34,9 @@ class MainSpider():
 
     _isRun = False
 
-    useTag = True
+    useTag = False
 
-    needDown = True
+    needDown = False
 
     totalPage = 1000
 
@@ -99,7 +99,7 @@ class MainSpider():
 
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
-                    dbCon.insertData(downUrl,dataTag)
+                    dbCon.insertData(downUrl,self.dataTag)
                     print(downUrl)
                     self.closeTab()
 
@@ -109,7 +109,7 @@ class MainSpider():
                     if self.needDown:
                         net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
-                    dbCon.insertData(downUrl,dataTag)
+                    dbCon.insertData(downUrl,self.dataTag)
                     print(downUrl)
 
             if not self.useTag:

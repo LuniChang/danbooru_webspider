@@ -1,1 +1,1 @@
-pyinstaller  -F   ./core/main.py  -p=C:/Python37/Lib
+pyinstaller  -F   ./core/main.py  -p=C:/Python37/Lib  -p=C:/Python37/Lib/site-packages
