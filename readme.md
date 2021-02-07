@@ -2,12 +2,12 @@
 
 pip install selenium -i https://mirrors.ustc.edu.cn/pypi/web/simple/
 
-
 pip install pyquery 
 pip install tk
 pip install requests
 pip install tqdm
 pip install sqlite3 
+
 
 node:
   for firefox 
