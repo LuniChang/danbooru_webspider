@@ -34,9 +34,9 @@ class MainSpider():
 
     _isRun = False
 
-    useTag = True
+    useTag = False
 
-    needDown = True
+    needDown = False
 
     totalPage = 1000
 
