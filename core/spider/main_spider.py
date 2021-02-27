@@ -127,7 +127,7 @@ class MainSpider():
             log.lastUrl(self.browser.current_url)
             nextPage = self.wait.until(
                 EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, '#paginator-next'))
+                    (By.CSS_SELECTOR, '.paginator-next'))
             )
 
             nextPage.click()
