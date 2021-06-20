@@ -82,7 +82,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     def startRun():
         spider.baseUrl=url.get() 
         spider.savePath=savePath.get()
-        spider.spider=totalPage.get()
+        spider.totalPage=totalPage.get()
         spider.dataTag=dataTag.get()
         spider.start()
     def selectDbFile():
