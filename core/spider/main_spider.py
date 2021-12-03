@@ -72,7 +72,7 @@ class MainSpider():
 
             self.wait.until(
                 EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, '#posts-container'))
+                    (By.CSS_SELECTOR, '#post-sections'))
             )
 
             # items = self.browser.find_elements_by_class_name(
@@ -139,7 +139,9 @@ class MainSpider():
 
     def doSprider(self):
         if self.browser == None:
-            self.browser = webdriver.Firefox()
+            self.browser = webdriver.Chrome()
+            # self.browser = webdriver.Chrome(executable_path="C:/Users/Administrator/AppData/Local/Google/Chrome/Application/chrome.exe")
+            # self.browser = webdriver.Firefox()
 
         self.open()
         total = self.totalPage
