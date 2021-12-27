@@ -74,16 +74,17 @@ class MainSpider():
                 EC.presence_of_element_located(
                     (By.CSS_SELECTOR, '#post-sections'))
             )
-
+   
             # items = self.browser.find_elements_by_class_name(
             #     '#posts-container > article')
 
+            # items = self.browser.find_elements_by_xpath(
+            #     '//article[@data-file-url]')
             items = self.browser.find_elements_by_xpath(
-                '//article[@data-file-url]')
-
+                '//article[@data-score]')
             for item in items:
 
-                if self.useTag:
+                # if self.useTag:
                     urlTag = item.find_element_by_tag_name(
                         'a')
                     url = urlTag.get_attribute('href')
@@ -103,14 +104,14 @@ class MainSpider():
                     print(downUrl)
                     self.closeTab()
 
-                else:
-                    downUrl = item.get_attribute('data-file-url')
-                    # downUrl = item.get_attribute('data-large-file-url')
-                    if self.needDown:
-                        net.download_from_url(downUrl, self.savePath)
-                    log.history(downUrl)
-                    dbCon.insertData(downUrl,self.dataTag)
-                    print(downUrl)
+                # else:
+                #     downUrl = item.get_attribute('data-file-url')
+                #     # downUrl = item.get_attribute('data-large-file-url')
+                #     if self.needDown:
+                #         net.download_from_url(downUrl, self.savePath)
+                #     log.history(downUrl)
+                #     dbCon.insertData(downUrl,self.dataTag)
+                #     print(downUrl)
 
             if not self.useTag:
                 sleep(20)
