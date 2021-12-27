@@ -90,7 +90,9 @@ def download_from_url(url, dirPath=None):
                     pbar.update(1024)
     except Exception as e:
         print(e)
-        return False
+        pbar.close()
+        return download_from_url(url, dirPath)
 
     pbar.close()
     return True
+
