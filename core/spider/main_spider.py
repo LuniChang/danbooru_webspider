@@ -146,7 +146,7 @@ class MainSpider():
     def doSprider(self):
         if self.browser == None:
 
-            if self.openBs == False:
+            if self.openBs :
                  self.browser = webdriver.Chrome()
 
             else:    

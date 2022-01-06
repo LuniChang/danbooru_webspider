@@ -77,7 +77,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
             spider.needDown=True
         else:
             spider.needDown=False
-
+    checkNeedDown()
     url = tk.StringVar()
 
     if baseUrl == None:
