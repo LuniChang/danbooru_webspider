@@ -91,7 +91,8 @@ def download_from_url(url, dirPath=None):
     except Exception as e:
         print(e)
         pbar.close()
-        return download_from_url(url, dirPath)
+        log.errUrl(url)
+        return False
 
     pbar.close()
     return True

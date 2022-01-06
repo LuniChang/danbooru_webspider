@@ -38,6 +38,13 @@ def lastUrl(message):
     f.write(message)
     f.close()
 
+def errUrl(message):
+
+    fPath = path.getLogDirPath()+"err_url.txt"
+    f = open(fPath, "a+")
+    f.write('\r\n')
+    f.write(message)
+    f.close()
 
 def getLastUrl():
 

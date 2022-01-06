@@ -2,10 +2,14 @@
 # encoding: utf-8
 # time: 2020/3/23 16:11
 
+from tkinter.constants import FALSE
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+
+
 from time import sleep
 from pyquery import PyQuery as pq
 
@@ -38,6 +42,7 @@ class MainSpider():
 
     needDown = False
 
+    openBs = False
     totalPage = 1000
 
     dataTag="azur_lane"
@@ -140,7 +145,16 @@ class MainSpider():
 
     def doSprider(self):
         if self.browser == None:
-            self.browser = webdriver.Chrome()
+
+            if self.openBs == False:
+                 self.browser = webdriver.Chrome()
+
+            else:    
+                chrome_options = Options()
+                chrome_options.add_argument('--headless')
+                self.browser = webdriver.Chrome(chrome_options=chrome_options)
+            
+
             # self.browser = webdriver.Chrome(executable_path="C:/Users/Administrator/AppData/Local/Google/Chrome/Application/chrome.exe")
             # self.browser = webdriver.Firefox()
 

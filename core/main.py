@@ -3,6 +3,8 @@ import tkinter as tk
 
 from spider.main_spider import MainSpider
 import common.path as path
+
+import common.imgMove as imgMove
 import datetime
 import configparser
 import tkinter.filedialog as filedialog
@@ -46,11 +48,15 @@ def initJdSpider(paramFrame,bg='#ddd'):
 
     useTag = tk.IntVar()
     useTag.set(0)   
+
+    openBs = tk.IntVar()
+    openBs.set(0) 
     needDown = tk.IntVar()
-    needDown.set(0)
+    needDown.set(1)
 
     dataTag=tk.StringVar()
     dataTag.set(confTag)
+
 
 
     def checkUseTag():
@@ -58,6 +64,14 @@ def initJdSpider(paramFrame,bg='#ddd'):
            spider.useTag=True
         else:
            spider.useTag=False
+    checkUseTag()
+
+    def checkOpenBs():
+        if openBs.get() == 1:
+           spider.openBs=True
+        else:
+           spider.openBs=False
+    checkOpenBs()
     def checkNeedDown():
         if needDown.get() == 1:
             spider.needDown=True
@@ -95,7 +109,8 @@ def initJdSpider(paramFrame,bg='#ddd'):
     # tk.Checkbutton(paramFrame,bg=bg, text="打开标签模式", variable=useTag, onvalue=1,
     #                offvalue=0, command=checkUseTag).grid(row=0, column=1)
 
-
+    tk.Checkbutton(paramFrame,bg=bg, text="打开浏览器模式", variable=useTag, onvalue=1,
+                   offvalue=0, command=checkOpenBs).grid(row=0, column=1)
     tk.Checkbutton(paramFrame,bg=bg, text="自动下载（很慢）", variable=needDown, onvalue=1,
                    offvalue=0, command=checkNeedDown).grid(row=0, column=2)
 
@@ -252,6 +267,40 @@ fm3.grid(row=2, column=0)
 initSplitFile(fm3)
 
 
+
+
+def  initOrderImg(paramFrame,bg='#fff'):
+
+    filePath = tk.StringVar()
+
+  
+
+    def selectFile():
+        tmpPath =filedialog.askdirectory()    
+        filePath.set(tmpPath)
+    def orderFile():
+        if filePath.get() == "" or filePath.get() is None:
+            msgbox.showinfo("提示","未选择文件夹")
+        else:    
+          imgMove.moveImgToDir(filePath.get())
+          msgbox.showinfo("提示","整理完成")
+    
+    tk.Label(paramFrame,bg=bg, text="整理文件夹路径:").grid(row=0, column=0)
+
+    tk.Entry(paramFrame,bg=bg, textvariable=filePath, width=100).grid(row=0, column=1,columnspan=4)
+
+    tk.Button(paramFrame,bg=bg, text="选择文件夹", width=10, height=1,
+              command=selectFile).grid(row=1, column=1)
+
+
+ 
+    tk.Button(paramFrame,bg=bg, text="开始", width=10, height=1,
+              command=orderFile).grid(row=3, column=1)
+
+
+fm4 = tk.Frame(main,bg='#fff')
+fm4.grid(row=3, column=0)
+initOrderImg(fm4)
 # 进入消息循环
 main.mainloop()
 
