@@ -109,7 +109,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     # tk.Checkbutton(paramFrame,bg=bg, text="打开标签模式", variable=useTag, onvalue=1,
     #                offvalue=0, command=checkUseTag).grid(row=0, column=1)
 
-    tk.Checkbutton(paramFrame,bg=bg, text="打开浏览器模式", variable=useTag, onvalue=1,
+    tk.Checkbutton(paramFrame,bg=bg, text="打开浏览器模式", variable=openBs, onvalue=1,
                    offvalue=0, command=checkOpenBs).grid(row=0, column=1)
     tk.Checkbutton(paramFrame,bg=bg, text="自动下载（很慢）", variable=needDown, onvalue=1,
                    offvalue=0, command=checkNeedDown).grid(row=0, column=2)
