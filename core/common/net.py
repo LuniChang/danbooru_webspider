@@ -73,7 +73,7 @@ def download_from_url(url, dirPath=None):
     else:
         first_byte = 0
     if first_byte >= file_size:
-        return file_size
+        return True
 
     header = {"Range": "bytes=%s-%s" % (first_byte, file_size)}
     pbar = tqdm(

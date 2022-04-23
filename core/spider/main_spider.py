@@ -102,8 +102,9 @@ class MainSpider():
                     downUrl = tag.find_element_by_tag_name(
                         'a').get_attribute('href')
                     if self.needDown:
+                       while net.download_from_url(downUrl, self.savePath) !=True:
+                            print("TRY  :"+downUrl)
 
-                        net.download_from_url(downUrl, self.savePath)
                     log.history(downUrl)
                     dbCon.insertData(downUrl,self.dataTag)
                     print(downUrl)
@@ -122,7 +123,10 @@ class MainSpider():
                 sleep(20)
             return True
         except Exception as e:
-            self.browser.refresh()
+            if( self.browser.find_element_by_id('post-info-size')):
+                self.closeTab()
+            else:
+                self.browser.refresh()
             print("getImg err:"+str(e))
             return False
 
