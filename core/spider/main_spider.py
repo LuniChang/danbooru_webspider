@@ -13,6 +13,8 @@ from selenium.webdriver.chrome.options import Options
 from time import sleep
 from pyquery import PyQuery as pq
 
+from datetime  import datetime
+
 
 import threading
 import re
@@ -80,19 +82,20 @@ class MainSpider():
                     (By.CSS_SELECTOR, '#post-sections'))
             )
    
-            # items = self.browser.find_elements_by_class_name(
-            #     '#posts-container > article')
+            items = self.browser.find_elements_by_class_name(
+                'post-preview-link')
 
             # items = self.browser.find_elements_by_xpath(
             #     '//article[@data-file-url]')
-            items = self.browser.find_elements_by_xpath(
-                '//article[@data-score]')
+            # items = self.browser.find_elements_by_xpath(
+            #     '//article[@data-score]')
             for item in items:
 
                 # if self.useTag:
-                    urlTag = item.find_element_by_tag_name(
-                        'a')
-                    url = urlTag.get_attribute('href')
+                    # urlTag = item.find_element_by_tag_name(
+                    #     'a')
+                    # url = urlTag.get_attribute('href')
+                    url = item.get_attribute('href')
                     self.openNewTag(url)
                     self.wait.until(
                         EC.presence_of_element_located(
@@ -109,6 +112,7 @@ class MainSpider():
                     dbCon.insertData(downUrl,self.dataTag)
                     print(downUrl)
                     self.closeTab()
+                    
 
                 # else:
                 #     downUrl = item.get_attribute('data-file-url')
@@ -119,8 +123,8 @@ class MainSpider():
                 #     dbCon.insertData(downUrl,self.dataTag)
                 #     print(downUrl)
 
-            if not self.useTag:
-                sleep(20)
+            # if not self.useTag:
+            sleep(20)
             return True
         except Exception as e:
             if( self.browser.find_element_by_id('post-info-size')):
