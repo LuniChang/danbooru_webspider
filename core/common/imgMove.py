@@ -24,6 +24,27 @@ def moveImgToDir(imgDir):
                print(e)
           sum=sum+1 
           print("count:"+format(sum/count*100,'.2f'))
+
+        count=len(dirs)
+        print("count:"+str(count))
+        sum=0 
+
+        for dir in dirs: 
+          fileNames=dir.split('_')
+          fileTag=fileNames[2]
+          if len(fileTag) == 1:
+              fileTag=fileNames[2]+""+fileNames[3]
+
+                    
+          tagDirPath=os.path.dirname(imgDir)+"\\order\\"+fileTag+"\\"
+          if not os.path.exists(tagDirPath):
+            os.makedirs(tagDirPath)    
+          try:  
+            shutil.move(os.path.join(root,dir), tagDirPath)  
+          except Exception as e:
+               print(e)
+          sum=sum+1 
+          print("count:"+format(sum/count*100,'.2f'))    
     print("finish")
 
 # moveImgToDir("D:\\tensorflow_proj\\danbooru_webspider\\dist\\down")
