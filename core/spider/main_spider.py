@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-
+import subprocess 
 
 from time import sleep
 from pyquery import PyQuery as pq
@@ -79,7 +79,7 @@ class MainSpider():
 
             self.wait.until(
                 EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, '#post-sections'))
+                    (By.CSS_SELECTOR, '.posts-container'))
             )
    
             items = self.browser.find_elements_by_class_name(
@@ -151,11 +151,29 @@ class MainSpider():
             # self.browser.refresh()
             print("nextPage err:"+str(e))
 
-    def doSprider(self):
+    
+    def openWebBrowser(self):
+        cmd='chrome.exe '\
+        '--remote-debugging-port=9222 '\
+        '--user-data-dir="C:/selenium"'
+        subprocess.run(cmd)
+
+    def openPage(self):
+        # cmd='chrome.exe '\
+        # '--remote-debugging-port=9222 '\
+        # '--user-data-dir="C:/selenium"'
+        # subprocess.run(cmd)
         if self.browser == None:
 
             if self.openBs :
-                 self.browser = webdriver.Chrome()
+                chrome_options = Options()
+                # chrome_options.add_argument('--disable-javascript') # 禁用javascript
+                # chrome_options.add_experimental_option('excludeSwitches',['enable-automation'])
+
+                chrome_options.add_experimental_option('debuggerAddress','127.0.0.1:9222')
+
+                self.browser = webdriver.Chrome(chrome_options=chrome_options)
+            
 
             else:    
                 chrome_options = Options()
@@ -166,7 +184,26 @@ class MainSpider():
             # self.browser = webdriver.Chrome(executable_path="C:/Users/Administrator/AppData/Local/Google/Chrome/Application/chrome.exe")
             # self.browser = webdriver.Firefox()
 
+        
         self.open()
+
+
+    def doSprider(self):
+        # if self.browser == None:
+
+        #     if self.openBs :
+        #          self.browser = webdriver.Chrome()
+
+        #     else:    
+        #         chrome_options = Options()
+        #         chrome_options.add_argument('--headless')
+        #         self.browser = webdriver.Chrome(chrome_options=chrome_options)
+            
+
+        #     # self.browser = webdriver.Chrome(executable_path="C:/Users/Administrator/AppData/Local/Google/Chrome/Application/chrome.exe")
+        #     # self.browser = webdriver.Firefox()
+        
+        # self.open()
         total = self.totalPage
         for i in range(0, total):
             try:

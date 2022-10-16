@@ -52,7 +52,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     openBs = tk.IntVar()
     openBs.set(1) 
     needDown = tk.IntVar()
-    needDown.set(1)
+    needDown.set(0)
 
     dataTag=tk.StringVar()
     dataTag.set(confTag)
@@ -93,6 +93,16 @@ def initJdSpider(paramFrame,bg='#ddd'):
     
     dbPathShow=tk.StringVar()
     dbPathShow.set(dbPath)
+
+    def openWebBrowser():
+        spider.openWebBrowser()
+
+    def openPage():      
+        spider.baseUrl=url.get() 
+        spider.savePath=savePath.get()
+        spider.totalPage=totalPage.get()
+        spider.dataTag=dataTag.get()
+        spider.openPage()
     def startRun():
         spider.baseUrl=url.get() 
         spider.savePath=savePath.get()
@@ -136,13 +146,16 @@ def initJdSpider(paramFrame,bg='#ddd'):
     tk.Button(paramFrame,bg=bg, text="选择数据库", width=10, height=1,
               command=selectDbFile).grid(row=5, column=2)
 
-
-
+    
+    tk.Button(paramFrame,bg=bg, text="打开浏览器", width=10, height=1,
+              command=openWebBrowser).grid(row=6, column=1)
+    tk.Button(paramFrame,bg=bg, text="链接浏览器", width=10, height=1,
+              command=openPage).grid(row=6, column=2)
 
     tk.Button(paramFrame,bg=bg, text="启动爬虫", width=10, height=1,
-              command=startRun).grid(row=6, column=1)
+              command=startRun).grid(row=6, column=3)
     tk.Button(paramFrame,bg=bg, text="关闭", width=10, height=1,
-              command=spider.stop).grid(row=6, column=2)
+              command=spider.stop).grid(row=6, column=4)
 
 
 fm1 = tk.Frame(main,bg='#ddd')
