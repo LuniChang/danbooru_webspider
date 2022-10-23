@@ -52,7 +52,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     openBs = tk.IntVar()
     openBs.set(1) 
     needDown = tk.IntVar()
-    needDown.set(0)
+    needDown.set(1)
 
     dataTag=tk.StringVar()
     dataTag.set(confTag)

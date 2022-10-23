@@ -10,6 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import subprocess 
 
+import urllib
+
 from time import sleep
 from pyquery import PyQuery as pq
 
@@ -18,8 +20,11 @@ from datetime  import datetime
 
 import threading
 import re
+import base64
 
-import config
+from io import BytesIO
+from PIL import Image
+
 
 import common.net as net
 import common.log as log
@@ -95,6 +100,7 @@ class MainSpider():
                     # urlTag = item.find_element_by_tag_name(
                     #     'a')
                     # url = urlTag.get_attribute('href')
+                    
                     url = item.get_attribute('href')
                     self.openNewTag(url)
                     self.wait.until(
@@ -104,9 +110,19 @@ class MainSpider():
                     tag = self.browser.find_element_by_id('post-info-size')
                     downUrl = tag.find_element_by_tag_name(
                         'a').get_attribute('href')
-                    if self.needDown:
-                       while net.download_from_url(downUrl, self.savePath) !=True:
-                            print("TRY  :"+downUrl)
+                    if self.needDown: #无法下载 待处理 建议使用带多任务下载的浏览器
+                     
+                    #    self.openNewTag(downUrl)
+                      
+                       self.saveImg(downUrl)
+                    #    tag.click()
+                
+                    #    self.closeTab()
+                    #    while net.download_from_url(downUrl, self.savePath) !=True:
+                    #         print("TRY  :"+downUrl)
+                            
+
+
 
                     log.history(downUrl)
                     dbCon.insertData(downUrl,self.dataTag)
@@ -231,3 +247,71 @@ class MainSpider():
     def closeTab(self):
         self.browser.close()
         self.browser.switch_to.window(self.browser.window_handles[0])
+    
+
+    
+    
+    def base64_to_image(self,base64_str):
+        base64_data = re.sub('^data:image/.+;base64,', '', base64_str)
+        byte_data = base64.b64decode(base64_data)
+        image_data = BytesIO(byte_data)
+        img = Image.open(image_data)
+        return img
+ 
+    def saveImg(self,url):
+       
+
+        fileNames=url.split("/")
+        fileName=fileNames[len(fileNames)-1]
+     
+
+        # js= " var link = document.createElement('a');"\
+        #     " link.style.display = 'none';"\
+        #     " link.href = '"+url+"';"\
+        #     " link.setAttribute('download', '"+fileName+"');"\
+        #     " document.body.appendChild(link);"\
+        #     " link.click();"
+
+        js= "fetch('"+url+"', {"\
+            " method: 'get',"\
+            " mode: 'cors',"\
+            " })"\
+            "  .then((response) => response.blob())"\
+            "  .then((data) => {"\
+            "   const downloadUrl = window.URL.createObjectURL(new Blob([data]));"\
+            "   const link = document.createElement('a');"\
+            "   link.href = downloadUrl;"\
+            "   link.setAttribute('download', '"+fileName+"');"\
+            "   document.body.appendChild(link);"\
+            "   link.click();"\
+            "   link.remove();"\
+            "  });"
+
+
+
+        self.browser.execute_script(js)    
+
+        # js = "let c = document.createElement('canvas');let ctx = c.getContext('2d');" \
+        #     "let img = document.getElementsByTagName('img')[0]; /*找到图片*/ " \
+        #     "c.height=img.naturalHeight;c.width=img.naturalWidth;" \
+        #     "ctx.drawImage(img, 0, 0,img.naturalWidth, img.naturalHeight);" \
+        #     "let base64String = c.toDataURL();return base64String;"
+            
+        # base64_str = self.browser.execute_script(js)
+        # img = self.base64_to_image(base64_str)
+
+
+        # try:
+        #   img.save(net.getDownPath(url))
+        # except Exception as e:
+        #     jpg=img.convert('RGB')
+
+        #     jpg.save(net.getDownPath(url))
+
+        sleep(10)
+ 
+        # src=self.browser.find_element_by_tag_name('img').get_attribute('src')
+        # for r in self.browser.iter_requests():
+        #      if r.url==src:
+        #        with open(net.getDownPath(url), 'wb') as f:
+        #          f.write(r.response.body)

@@ -48,6 +48,17 @@ def downUrl(url,dirPath=None):
 
 
 
+def getDownPath(url, dirPath=None):
+    if  dirPath==None:
+        dirPath= path.getProjectPath()+"down"
+
+    if not os.path.exists(dirPath):
+        os.makedirs(dirPath)    
+    fileNames=url.split("/")
+    fileName=fileNames[len(fileNames)-1]
+
+    savePath = dirPath+"\\"+fileName   
+    return  savePath
 
 def download_from_url(url, dirPath=None):
     if  dirPath==None:
