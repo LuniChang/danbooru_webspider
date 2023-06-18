@@ -61,7 +61,7 @@ class DataBase():
                 if line != '\r\n':
                     i=i+1
                     dbCon.insertData(line, tag)
-                    print('index:'+i)
+                    print('index:'+str(i))
             print('============finishi===========')        
 
         finally:
