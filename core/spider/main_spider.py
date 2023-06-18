@@ -265,27 +265,27 @@ class MainSpider():
         fileName=fileNames[len(fileNames)-1]
      
 
-        # js= " var link = document.createElement('a');"\
-        #     " link.style.display = 'none';"\
-        #     " link.href = '"+url+"';"\
-        #     " link.setAttribute('download', '"+fileName+"');"\
-        #     " document.body.appendChild(link);"\
-        #     " link.click();"
+        js= " var link = document.createElement('a');"\
+            " link.style.display = 'none';"\
+            " link.href = '"+url+"';"\
+            " link.setAttribute('download', '"+fileName+"');"\
+            " document.body.appendChild(link);"\
+            " link.click();"
 
-        js= "fetch('"+url+"', {"\
-            " method: 'get',"\
-            " mode: 'cors',"\
-            " })"\
-            "  .then((response) => response.blob())"\
-            "  .then((data) => {"\
-            "   const downloadUrl = window.URL.createObjectURL(new Blob([data]));"\
-            "   const link = document.createElement('a');"\
-            "   link.href = downloadUrl;"\
-            "   link.setAttribute('download', '"+fileName+"');"\
-            "   document.body.appendChild(link);"\
-            "   link.click();"\
-            "   link.remove();"\
-            "  });"
+        # js= "fetch('"+url+"', {"\
+        #     " method: 'get',"\
+        #     " mode: 'cors',"\
+        #     " })"\
+        #     "  .then((response) => response.blob())"\
+        #     "  .then((data) => {"\
+        #     "   const downloadUrl = window.URL.createObjectURL(new Blob([data]));"\
+        #     "   const link = document.createElement('a');"\
+        #     "   link.href = downloadUrl;"\
+        #     "   link.setAttribute('download', '"+fileName+"');"\
+        #     "   document.body.appendChild(link);"\
+        #     "   link.click();"\
+        #     "   link.remove();"\
+        #     "  });"
 
 
 

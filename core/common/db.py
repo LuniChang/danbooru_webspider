@@ -49,16 +49,20 @@ class DataBase():
 
             self._connect.execute(insertSql, (url, tag))
             self._connect.commit()
-            print(insertSql)
+            print(url)
         except Exception as e:
             print("insertData err:"+str(e))
 
     def insertFromFile(self, fPath, tag):
         fin = open(fPath, 'r')
         try:
+            i=0
             for line in fin:
                 if line != '\r\n':
+                    i=i+1
                     dbCon.insertData(line, tag)
+                    print('index:'+i)
+            print('============finishi===========')        
 
         finally:
             fin.close()
