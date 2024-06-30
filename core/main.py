@@ -36,7 +36,7 @@ main = tk.Tk()
 
 
 main.title("d爬虫工具")
-main.geometry("800x600")
+main.geometry("800x800")
 
 
 
@@ -282,6 +282,8 @@ initSplitFile(fm3)
 
 
 
+
+
 def  initOrderImg(paramFrame,bg='#fff'):
 
     filePath = tk.StringVar()
@@ -314,6 +316,59 @@ def  initOrderImg(paramFrame,bg='#fff'):
 fm4 = tk.Frame(main,bg='#fff')
 fm4.grid(row=3, column=0)
 initOrderImg(fm4)
+
+
+
+
+def  initCheckFile(paramFrame,bg='#fff'):
+    dirPath = tk.StringVar()
+    downfilePath = tk.StringVar()
+    outfilePath = tk.StringVar()
+
+    def checkFile():
+        path.checkFileDown(dirPath.get(),downfilePath.get(),outfilePath.get())
+
+    def selectDirFile():
+        tmpPath =filedialog.askdirectory()    
+        dirPath.set(tmpPath)
+    def selectDownFile():
+        tmpPath =filedialog.askopenfilename()    
+        downfilePath.set(tmpPath)
+    def selectOutFile():
+        tmpPath =filedialog.askopenfilename()    
+        outfilePath.set(tmpPath)
+    
+    tk.Label(paramFrame,bg=bg, text="已下载文件夹检查路径:").grid(row=0, column=0)
+
+    tk.Entry(paramFrame,bg=bg, textvariable=dirPath, width=100).grid(row=0, column=1,columnspan=4)
+
+    tk.Button(paramFrame,bg=bg, text="选择文件夹", width=10, height=1,
+              command=selectDirFile).grid(row=2, column=1)
+
+
+       
+    tk.Label(paramFrame,bg=bg, text="下载文件列表:").grid(row=3, column=0)
+
+    tk.Entry(paramFrame,bg=bg, textvariable=downfilePath, width=100).grid(row=3, column=1,columnspan=4)
+
+    tk.Button(paramFrame,bg=bg, text="选择文件", width=10, height=1,
+              command=selectDownFile).grid(row=4, column=1)
+    
+    tk.Label(paramFrame,bg=bg, text="输出检查路径:").grid(row=5, column=0)
+
+    tk.Entry(paramFrame,bg=bg, textvariable=outfilePath, width=100).grid(row=5, column=1,columnspan=4)
+
+    tk.Button(paramFrame,bg=bg, text="选择文件", width=10, height=1,
+              command=selectOutFile).grid(row=6, column=1)
+
+    tk.Button(paramFrame,bg=bg, text="开始检查", width=10, height=1,
+              command=checkFile).grid(row=7, column=1)
+
+
+fm4 = tk.Frame(main,bg='#fff')
+fm4.grid(row=3, column=0)
+initCheckFile(fm4)
+
 # 进入消息循环
 main.mainloop()
 

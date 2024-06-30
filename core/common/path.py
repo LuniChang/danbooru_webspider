@@ -117,3 +117,58 @@ def splitByLineCount(filename, count):
             sub = mkSubFile(buf, head, filename, sub)
     finally:
         fin.close()
+
+def checkFileDown(dirPath, downfilePath,outfilePath):
+# 把下载文件路径拿出来
+    try:
+        fin = open(downfilePath, 'r')
+        downPaths=[]
+        try:
+            i=0
+            for line in fin:
+                if line != '\r\n':
+                    i=i+1
+                    downPaths.append(line)
+                   
+            print('=========inFIle===finishi===========')        
+
+        finally:
+            fin.close()
+        outFile = open(outfilePath, "a+")
+
+  
+        for root,dirs,files in os.walk(dirPath):
+            count=len(downPaths)
+          
+            sum=0 
+            for downPath in downPaths:
+                if len(downPath)>0 and downPath != '\r\n':
+                  for file in files: 
+                   
+                    try:
+                        hadnotFile= downPath.index(file) 
+                        if hadnotFile >= 0:
+                            downPaths.remove(downPath)
+                            
+                           
+                    except ValueError:
+                        continue  
+                           
+      
+
+
+                sum=sum+1 
+                print("count:"+format(sum/count*100,'.2f'))
+
+                 
+        print("not down count:"+str(len(downPaths)))
+        for downPath in downPaths:
+            if len(downPath)>0 and downPath != '\r\n':
+               outFile.write(downPath)
+
+            
+        outFile.close()
+        
+        print("finish")
+    except Exception as e:
+            print("checkFileDown err:"+str(e))
