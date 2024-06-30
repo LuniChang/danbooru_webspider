@@ -320,7 +320,7 @@ initOrderImg(fm4)
 
 
 
-def  initCheckFile(paramFrame,bg='#fff'):
+def  initCheckFile(paramFrame,bg='#ddd'):
     dirPath = tk.StringVar()
     downfilePath = tk.StringVar()
     outfilePath = tk.StringVar()
@@ -365,8 +365,8 @@ def  initCheckFile(paramFrame,bg='#fff'):
               command=checkFile).grid(row=7, column=1)
 
 
-fm4 = tk.Frame(main,bg='#fff')
-fm4.grid(row=3, column=0)
+fm4 = tk.Frame(main,bg='#ddd')
+fm4.grid(row=4, column=0)
 initCheckFile(fm4)
 
 # 进入消息循环
