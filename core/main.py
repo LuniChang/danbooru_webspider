@@ -52,7 +52,7 @@ def initJdSpider(paramFrame,bg='#ddd'):
     openBs = tk.IntVar()
     openBs.set(1) 
     needDown = tk.IntVar()
-    needDown.set(1)
+    needDown.set(0)
 
     dataTag=tk.StringVar()
     dataTag.set(confTag)
@@ -172,7 +172,7 @@ def  initDataBase(paramFrame,bg='#ddd'):
     outfilePath = tk.StringVar()
 
     page = tk.IntVar()
-    page.set(1)
+    page.set(0)
     rowNum = tk.IntVar()
     rowNum.set(2000)
 
@@ -180,15 +180,19 @@ def  initDataBase(paramFrame,bg='#ddd'):
     dataTag.set(confTag)
 
     endDate=tk.StringVar()
-    endDate.set(time.strftime("%Y-%m-%d", time.localtime()))
+   
 
     startDate=tk.StringVar()
-    threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 1))
+    threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 2))
+    twoDayLater = (datetime.datetime.now() + datetime.timedelta(days = 2))
     # 转换为时间戳
     timeStamp = int(time.mktime(threeDayAgo.timetuple()))
     # 转换为其他字符串格式
     otherStyleTime = threeDayAgo.strftime("%Y-%m-%d")
     startDate.set(otherStyleTime)
+    timeStamp = int(time.mktime(twoDayLater.timetuple()))
+
+    endDate.set(twoDayLater.strftime("%Y-%m-%d"))
 
     def selectInFile():
         tmpPath =filedialog.askopenfilename()    

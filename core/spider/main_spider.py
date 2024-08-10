@@ -140,7 +140,7 @@ class MainSpider():
                 #     print(downUrl)
 
             # if not self.useTag:
-            sleep(20)
+            sleep(5)
             return True
         except Exception as e:
             if( self.browser.find_element_by_id('post-info-size')):
@@ -308,7 +308,7 @@ class MainSpider():
 
         #     jpg.save(net.getDownPath(url))
 
-        sleep(10)
+        sleep(5)
  
         # src=self.browser.find_element_by_tag_name('img').get_attribute('src')
         # for r in self.browser.iter_requests():
