@@ -134,6 +134,14 @@ class DataBase():
         try:
 
             res = self.getData(page, pageSize, tag,startDate, endDate)
+            import os
+ 
+
+            if not os.path.exists(printPath):
+                f= open(printPath, 'w')  
+                f.close()
+  
+     
             f = open(printPath, "a+")
 
             for row in res:

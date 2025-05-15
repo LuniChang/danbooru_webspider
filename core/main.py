@@ -171,6 +171,7 @@ def  initDataBase(paramFrame,bg='#ddd'):
     infilePath = tk.StringVar()
     outfilePath = tk.StringVar()
 
+    outfilePath.set( path.getLogDirPath() +'export_' +  time.strftime("%Y-%m-%d", time.localtime())+'.txt')
     page = tk.IntVar()
     page.set(0)
     rowNum = tk.IntVar()

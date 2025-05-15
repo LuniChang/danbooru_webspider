@@ -172,7 +172,7 @@ class MainSpider():
         cmd='chrome.exe '\
         '--remote-debugging-port=9222 '\
         '--user-data-dir="C:/selenium"'
-        subprocess.run(cmd)
+        subprocess.Popen(cmd)
 
     def openPage(self):
         # cmd='chrome.exe '\
